@@ -1,0 +1,39 @@
+// routes/serviceAppointmentRouter.js
+import express from "express";
+import { clerkMiddleware, requireAuth } from "@clerk/express";
+import adminAuth from "../middlewares/adminAuth.js";
+
+import {
+  getServiceAppointments,
+  getServiceAppointmentById,
+  createServiceAppointment,
+  confirmServicePayment,
+  updateServiceAppointment,
+  cancelServiceAppointment,
+  getServiceAppointmentStats,
+  getServiceAppointmentsByPatient,
+} from "../controllers/serviceAppointmentController.js";
+
+const router = express.Router();
+
+/* FIXED ROUTES FIRST */
+router.get("/", adminAuth, getServiceAppointments);
+router.get("/confirm", confirmServicePayment);
+router.get("/stats/summary", adminAuth, getServiceAppointmentStats);
+
+router.post("/", clerkMiddleware(), requireAuth(), createServiceAppointment);
+
+// 🔥 MUST BE BEFORE :id
+router.get(
+  "/me",
+  clerkMiddleware(),
+  requireAuth(),
+  getServiceAppointmentsByPatient
+);
+
+/* ID ROUTES LAST */
+router.get("/:id", adminAuth, getServiceAppointmentById);
+router.put("/:id", adminAuth, updateServiceAppointment);
+router.post("/:id/cancel", adminAuth, cancelServiceAppointment);
+
+export default router;
