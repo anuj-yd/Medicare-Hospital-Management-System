@@ -9,7 +9,6 @@ import {
   Ribbon,
   ShieldUser,
 } from "lucide-react";
-import banner from "../../assets/BannerImg.png";
 import { useNavigate } from "react-router-dom";
 import { bannerStyles } from "../../assets/dummyStyles";
 
@@ -27,11 +26,22 @@ const Banner = () => {
           <div className={bannerStyles.innerWhiteBorder}></div>
         </div>
 
+        {/* Background Image Layer */}
+        <div
+          className="absolute inset-0.5 rounded-3xl bg-cover bg-center bg-no-repeat transition-transform duration-700 group-hover:scale-105"
+          style={{
+            backgroundImage: `url("https://images.unsplash.com/photo-1681911046053-1d2fdce39ea0?q=80&w=1421&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D")`,
+          }}
+        />
+
+        {/* Subtle Gradient Overlay for Text Readability & Contrast */}
+        <div className="absolute inset-0.5 rounded-3xl bg-gradient-to-r from-white/95 via-white/85 to-white/40 lg:to-white/20 pointer-events-none" />
+
         {/* Content Container */}
         <div className={bannerStyles.contentContainer}>
           <div className={bannerStyles.flexContainer}>
             {/* Left Content Section */}
-            <div className={bannerStyles.leftContent}>
+            <div className={`${bannerStyles.leftContent} max-w-2xl`}>
               {/* Header with Badge */}
               <div className={bannerStyles.headerBadgeContainer}>
                 <div className={bannerStyles.stethoscopeContainer}>
@@ -126,27 +136,11 @@ const Banner = () => {
                 </button>
               </div>
             </div>
-
-            {/* Right Image Section */}
-            <div className={bannerStyles.rightImageSection}>
-              {/* Main Image Container */}
-              <div className={bannerStyles.imageContainer}>
-                {/* Main Image Frame */}
-                <div className={bannerStyles.imageFrame}>
-                  {/* Controlled heights for small / medium / large screens so the image looks consistent */}
-                  <img
-                    src={banner}
-                    alt="Professional Healthcare Team"
-                    className={bannerStyles.image}
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>{" "}
       {/* end main container */}
     </div>
-  )
-}
+  );
+};
 export default Banner;
