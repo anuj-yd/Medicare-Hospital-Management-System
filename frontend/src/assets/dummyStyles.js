@@ -33,8 +33,8 @@ export const cardStyles = {
   image: "w-full h-full object-cover",
   
   // Text styles
-  doctorName: "text-xl md:text-sm xl:text-md whitespace-nowrap lg:text-lg font-semibold mt-4 text-center",
-  serviceName: "text-xl md:text-sm lg:text-md xl:text-lg font-semibold text-center mt-4",
+  doctorName: "text-xl md:text-sm xl:text-md lg:text-lg font-semibold mt-4 text-center leading-snug line-clamp-1",
+  serviceName: "text-xl md:text-sm lg:text-md xl:text-lg font-semibold text-center mt-4 leading-snug line-clamp-2",
   specialization: "text-sm text-emerald-700 mt-1",
   price: "text-center text-green-700 font-semibold text-lg mt-2",
   
@@ -335,7 +335,7 @@ export const doctorsPageStyles = {
   doctorImageUnavailable: "border-4 border-gray-300 shadow-md",
   
   // Doctor info
-  doctorName: "text-base sm:text-lg md:text-md whitespace-nowrap lg:text-lg font-bold text-emerald-900 mb-1",
+  doctorName: "text-base sm:text-lg md:text-md lg:text-lg font-bold text-emerald-900 mb-1 leading-snug line-clamp-1",
   doctorSpecialization: "text-sm sm:text-sm md:text-sm text-emerald-600 font-medium mb-3",
   
   // Experience badge
@@ -788,10 +788,10 @@ export const servicePageStyles = {
 
 export const serviceCardStyles = {
   // Card container
-  card: "group rounded-2xl overflow-hidden bg-white shadow-xl hover:-translate-y-2 transition-transform duration-500 border border-emerald-100",
+  card: "group rounded-2xl overflow-hidden bg-white shadow-xl hover:-translate-y-2 transition-transform duration-500 border border-emerald-100 flex flex-col h-full",
   
   // Image container
-  imageContainer: "w-full overflow-hidden bg-emerald-50/30 flex items-center justify-center",
+  imageContainer: "w-full overflow-hidden bg-emerald-50/30 flex items-center justify-center shrink-0",
   
   // Images
   picture: "w-full",
@@ -799,8 +799,8 @@ export const serviceCardStyles = {
   fallbackImage: "w-full h-60 sm:h-48 md:h-56 lg:h-60 object-cover object-center transform transition-transform duration-500",
   
   // Content
-  content: "p-5 text-center",
-  serviceName: "text-lg md:text-sm whitespace-nowrap font-semibold font-serif text-emerald-900",
+  content: "p-5 text-center flex flex-col justify-between flex-1",
+  serviceName: "text-base sm:text-lg md:text-sm lg:text-base font-semibold font-serif text-emerald-900 leading-snug line-clamp-2 min-h-[3rem] flex items-center justify-center text-center",
   
   // Buttons
   buttonContainer: "mt-4",
