@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { doctorDetailStyles as s } from "../../assets/dummyStyles";
 import useAdminFetch from "../../hooks/useAdminFetch";
+import { getApiBase } from "../../config/api";
 
 function timeStringToMinutes(t) {
   if (!t) return 0;
@@ -250,7 +251,7 @@ export default function DoctorDetailPage() {
 
       if (form.imageFile) fd.append("image", form.imageFile);
 
-      const API_BASE = (import.meta.env.VITE_API_URL || "http://localhost:4000") + "/api";
+      const API_BASE = getApiBase() + "/api";
 
       const res = await adminFetch(`${API_BASE}/doctors`, {
         method: "POST",

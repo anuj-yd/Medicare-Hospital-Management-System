@@ -4,10 +4,11 @@ import { Medal, ChevronsRight, MousePointer2Off } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeDoctorsStyles, iconSize } from "../../assets/dummyStyles";
 import fallbackDoctors from "../../data/doctorsData";
+import { getApiBase } from "../../config/api";
 
 const HomeDoctors = ({ apiBase, previewCount = 8 }) => {
-  const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
-  const [doctors, setDoctors] = useState([]);
+  const API_BASE = getApiBase(apiBase);
+  const [doctors, setDoctors] = useState(fallbackDoctors);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 

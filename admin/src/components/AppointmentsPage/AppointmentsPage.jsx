@@ -3,11 +3,12 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Search, Calendar, BadgeIndianRupee } from "lucide-react";
 import { pageStyles, statusClasses, keyframesStyles } from "../../assets/dummyStyles";
 import useAdminFetch from "../../hooks/useAdminFetch";
+import { getApiBase } from "../../config/api";
 
 /* ----------------------
   Config
 ------------------------ */
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE = getApiBase();
 
 /* ----------------------
   Helpers

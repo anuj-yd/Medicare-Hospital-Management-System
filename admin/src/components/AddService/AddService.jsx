@@ -12,12 +12,13 @@ import {
 } from "lucide-react";
 import { addServiceStyles } from "../../assets/dummyStyles";
 import useAdminFetch from "../../hooks/useAdminFetch";
+import { getApiBase } from "../../config/api";
 
 
 
 export default function AddService({ apiBase, serviceId }) {
   const adminFetch = useAdminFetch();
-  const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
+  const API_BASE = getApiBase(apiBase);
 
   const fileRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null); // either objectURL or remote imageUrl

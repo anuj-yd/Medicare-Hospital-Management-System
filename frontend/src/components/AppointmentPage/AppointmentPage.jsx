@@ -29,8 +29,9 @@ import cholesterolImage from "../../assets/S3.png";
 import bloodPressureImage from "../../assets/S4.png";
 import thyroidImage from "../../assets/S5.png";
 import xrayImage from "../../assets/S6.png";
+import { getApiBase } from "../../config/api";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE = getApiBase();
 const API = axios.create({ baseURL: API_BASE });
 const doctorFallbackImages = [
   doctorFallback1,

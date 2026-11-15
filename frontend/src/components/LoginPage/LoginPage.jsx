@@ -4,11 +4,12 @@ import toast, { Toaster } from "react-hot-toast";
 import logo from "../../assets/logo.png";
 import { ArrowLeft } from "lucide-react";
 import { loginPageStyles, toastStyles } from "../../assets/dummyStyles";
+import { getApiBase } from "../../config/api";
 
 const STORAGE_KEY = "doctorToken_v1";
 
 export default function LoginPage({ apiBase }) {
-  const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
+  const API_BASE = getApiBase(apiBase);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();

@@ -18,8 +18,9 @@ import {
 } from "lucide-react";
 import { serviceDashboardStyles } from "../../assets/dummyStyles";
 import useAdminFetch from "../../hooks/useAdminFetch";
+import { getApiBase } from "../../config/api";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE = getApiBase();
 
 /* -----------------------
    Normalizer - robust to multiple backend shapes

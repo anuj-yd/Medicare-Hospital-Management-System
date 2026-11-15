@@ -21,6 +21,7 @@ import {
   BadgeIndianRupee,
 } from "lucide-react";
 import { editProfilePageStyles, iconSize } from "../../assets/dummyStyles";
+import { getApiBase } from "../../config/api";
 
 const STORAGE_KEY = "doctorToken_v1";
 
@@ -59,7 +60,7 @@ function dedupeAndSortSchedule(schedule = {}) {
 export default function EditProfilePage({ apiBase }) {
   const { id } = useParams(); // expects route like /doctor-edit/:id
   const navigate = useNavigate();
-  const API_BASE = (import.meta.env.VITE_API_URL || "http://localhost:4000") + "/api/doctors";
+  const API_BASE = (apiBase || getApiBase()) + "/api/doctors";
 
   const [doc, setDoc] = useState(null);
   const [editing, setEditing] = useState(false);

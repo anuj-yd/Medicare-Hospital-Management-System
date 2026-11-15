@@ -18,6 +18,8 @@ import doctorFallback4 from "../../assets/D4.png";
 import doctorFallback5 from "../../assets/D5.png";
 import doctorFallback6 from "../../assets/D6.png";
 
+import { getApiBase } from "../../config/api";
+
 const doctorFallbackImages = [
   doctorFallback1,
   doctorFallback2,
@@ -28,7 +30,7 @@ const doctorFallbackImages = [
 ];
 
 const DoctorsPage = ({ apiBase }) => {
-  const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
+  const API_BASE = getApiBase(apiBase);
 
   const [allDoctors, setAllDoctors] = useState([]);
   const [loading, setLoading] = useState(true);

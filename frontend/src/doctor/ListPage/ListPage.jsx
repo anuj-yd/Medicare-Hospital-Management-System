@@ -3,8 +3,9 @@ import { getDoctorAuthHeaders } from "../../utils/doctorAuth";
 import { Search, X, Phone, Calendar } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { listPageStyles } from "../../assets/dummyStyles";
+import { getApiBase } from "../../config/api";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE = getApiBase();
 
 /* -------------------------
    Utils

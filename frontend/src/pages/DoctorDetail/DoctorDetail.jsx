@@ -22,8 +22,9 @@ import "react-toastify/dist/ReactToastify.css";
 // Clerk client hooks
 import { useAuth, useUser } from "@clerk/react";
 import { doctorDetailStyles } from "../../assets/dummyStyles";
+import { getApiBase } from "../../config/api";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const API_BASE = getApiBase();
 
 function getScheduleDates(schedule) {
   if (!schedule) return [];

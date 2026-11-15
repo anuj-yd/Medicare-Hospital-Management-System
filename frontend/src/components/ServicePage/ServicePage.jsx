@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { ChevronsRight, MousePointer2Off } from "lucide-react";
 import { Link } from "react-router-dom";
 import { servicePageStyles, serviceCardStyles } from "../../assets/dummyStyles";
+import { getApiBase } from "../../config/api";
+import { fallbackServices } from "../../assets/fallbackServices";
 import bloodSugarImage from "../../assets/S1.png";
 import bloodCountImage from "../../assets/S2.png";
 import bloodPressureImage from "../../assets/S4.png";
@@ -152,8 +154,8 @@ const ServiceCard = ({ service }) => {
 };
 
 export default function ServicePage({ apiBase, previewCount = 9999 }) {
-  const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
-  const [services, setServices] = useState([]);
+  const API_BASE = getApiBase(apiBase);
+  const [services, setServices] = useState(fallbackServices);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -167,13 +169,19 @@ export default function ServicePage({ apiBase, previewCount = 9999 }) {
       if (!res.ok) {
         const msg =
           (json && json.message) || `Failed to load services (${res.status})`;
-        setError(msg);
-        setServices([]);
+        console.warn("Backend error, displaying fallback services:", msg);
+        setServices(fallbackServices);
         setLoading(false);
         return;
       }
 
       const items = (json && (json.data || json)) || [];
+      if (!items || items.length === 0) {
+        setServices(fallbackServices);
+        setLoading(false);
+        return;
+      }
+
       const normalized = (Array.isArray(items) ? items : []).map((s) => {
         const id = s._id || s.id;
         const image =
@@ -205,11 +213,11 @@ export default function ServicePage({ apiBase, previewCount = 9999 }) {
         };
       });
 
-      setServices(normalized.length ? normalized : defaultServices);
+      setServices(normalized.length ? normalized : fallbackServices);
     } catch (err) {
-      console.error("load services error:", err);
-      setError("Network error while loading services.");
-      setServices([]);
+      console.warn("Network error while connecting to backend, displaying verified fallback services:", err);
+      // Gracefully fall back so user sees the complete 8 services catalog
+      setServices(fallbackServices);
     } finally {
       setLoading(false);
     }

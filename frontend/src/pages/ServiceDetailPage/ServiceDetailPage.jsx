@@ -12,8 +12,10 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@clerk/react";
 import toast, { Toaster } from "react-hot-toast";
 import { serviceDetailStyles, iconSize } from "../../assets/dummyStyles";
+import { getApiBase } from "../../config/api";
+import { fallbackServices } from "../../assets/fallbackServices";
 
-const DEFAULT_HOST = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
+const DEFAULT_HOST = getApiBase();
 
 export default function ServiceDetail() {
   const { id } = useParams();
@@ -134,7 +136,10 @@ export default function ServiceDetail() {
         lastError,
       );
       const local =
-        servicesData && servicesData.find((s) => String(s.id) === String(id));
+        fallbackServices &&
+        fallbackServices.find(
+          (s) => String(s.id) === String(id) || String(s._id) === String(id)
+        );
       if (local) {
         const cloned = JSON.parse(JSON.stringify(local));
         if (
