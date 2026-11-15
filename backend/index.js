@@ -13,29 +13,49 @@ import serviceAppointmentRouter from './routes/serviceAppointmentRouter.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
-// ⭐ IMPORTANT: ENABLE CREDENTIALS FOR CLERK COOKIE SESSION
+// ⭐ IMPORTANT: CORS CONFIGURATION FOR PRODUCTION & DEVELOPMENT
 const allowedOrigins = [
-  "http://localhost:5173", // user frontend
-  "http://localhost:5174", // admin dashboard
+  "http://localhost:5173",
+  "http://localhost:5174",
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
-].filter(Boolean);
+]
+  .filter(Boolean)
+  .map((url) => url.trim().replace(/\/$/, ""));
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow server-to-server & tools like Postman (no origin)
+      // allow server-to-server, mobile apps, or curl (no origin header)
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      const cleanOrigin = origin.trim().replace(/\/$/, "");
+
+      // 1. Check exact match against configured origins
+      if (allowedOrigins.includes(cleanOrigin)) {
         return callback(null, true);
       }
 
+      // 2. Allow any localhost development port
+      if (/^http:\/\/localhost:\d+$/.test(cleanOrigin)) {
+        return callback(null, true);
+      }
+
+      // 3. Allow all Vercel deployment & preview domains
+      try {
+        const { hostname } = new URL(cleanOrigin);
+        if (hostname.endsWith(".vercel.app")) {
+          return callback(null, true);
+        }
+      } catch (err) {
+        // invalid URL
+      }
+
+      console.warn(`[CORS Blocked] Origin: ${origin}`);
       return callback(new Error("Not allowed by CORS"));
     },
-    credentials: true, // ✅ REQUIRED for cookies / Clerk
+    credentials: true, // REQUIRED for Clerk cookies / session auth
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 

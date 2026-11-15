@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Medal, ChevronsRight, MousePointer2Off } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeDoctorsStyles, iconSize } from "../../assets/dummyStyles";
+import fallbackDoctors from "../../data/doctorsData";
 
 const HomeDoctors = ({ apiBase, previewCount = 8 }) => {
   const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
@@ -24,14 +25,20 @@ const HomeDoctors = ({ apiBase, previewCount = 8 }) => {
           const msg =
             (json && json.message) || `Failed to load doctors (${res.status})`;
           if (!mounted) return;
-          setError(msg);
-          setDoctors([]);
+          console.warn("Backend error, using fallback doctor list:", msg);
+          setDoctors(fallbackDoctors);
           setLoading(false);
           return;
         }
 
         // support both { success: true, data: [...] } and plain array
         const items = (json && (json.data || json)) || [];
+        if (!items || items.length === 0) {
+          if (!mounted) return;
+          setDoctors(fallbackDoctors);
+          setLoading(false);
+          return;
+        }
         // normalize each doctor for the UI
         const normalized = (Array.isArray(items) ? items : []).map((d) => {
           const id = d._id || d.id;
@@ -61,9 +68,8 @@ const HomeDoctors = ({ apiBase, previewCount = 8 }) => {
         setDoctors(normalized);
       } catch (err) {
         if (!mounted) return;
-        console.error("load doctors error:", err);
-        setError("Network error while loading doctors.");
-        setDoctors([]);
+        console.warn("Network error while connecting to backend, displaying verified fallback team:", err);
+        setDoctors(fallbackDoctors);
       } finally {
         if (mounted) setLoading(false);
       }

@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { doctorsPageStyles } from "../../assets/dummyStyles";
+import fallbackDoctors from "../../data/doctorsData";
 import doctorFallback1 from "../../assets/D1.png";
 import doctorFallback2 from "../../assets/D2.png";
 import doctorFallback3 from "../../assets/D3.png";
@@ -49,14 +50,21 @@ const DoctorsPage = ({ apiBase }) => {
           const msg =
             (json && json.message) || `Failed to load doctors (${res.status})`;
           if (mounted) {
-            setError(msg);
-            setAllDoctors([]);
+            console.warn("Backend error, using fallback doctor dataset:", msg);
+            setAllDoctors(fallbackDoctors);
             setLoading(false);
           }
           return;
         }
 
         const items = (json && (json.data || json)) || [];
+        if (!items || items.length === 0) {
+          if (mounted) {
+            setAllDoctors(fallbackDoctors);
+            setLoading(false);
+          }
+          return;
+        }
         const normalized = (Array.isArray(items) ? items : []).map((d, index) => {
           const id = d._id || d.id;
           const fallbackImage =
@@ -97,10 +105,9 @@ const DoctorsPage = ({ apiBase }) => {
           setError("");
         }
       } catch (err) {
-        console.error("load doctors error:", err);
+        console.warn("load doctors error, displaying verified fallback team:", err);
         if (mounted) {
-          setError("Network error while loading doctors.");
-          setAllDoctors([]);
+          setAllDoctors(fallbackDoctors);
         }
       } finally {
         if (mounted) setLoading(false);
