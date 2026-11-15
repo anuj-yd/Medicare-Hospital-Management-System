@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "migrate:doctor-passwords": "node scripts/hashDoctorPasswords.js"
+    "migrate:doctor-passwords": "node scripts/hashDoctorPasswords.js",
+    "seed:doctors": "node scripts/seedDoctors.js"
   },
   "author": "",
   "license": "ISC",
