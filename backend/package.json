@@ -7,7 +7,9 @@
   "scripts": {
     "start": "nodemon index.js",
     "migrate:doctor-passwords": "node scripts/hashDoctorPasswords.js",
-    "seed:doctors": "node scripts/seedDoctors.js"
+    "seed:doctors": "node scripts/seedDoctors.js",
+    "seed:services": "node scripts/seedServices.js",
+    "seed:all": "node scripts/seedDoctors.js && node scripts/seedServices.js"
   },
   "author": "",
   "license": "ISC",
