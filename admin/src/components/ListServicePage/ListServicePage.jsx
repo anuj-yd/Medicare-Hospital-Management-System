@@ -15,7 +15,7 @@ import useAdminFetch from "../../hooks/useAdminFetch";
 
 export default function ListServicePage({ apiBase }) {
   const adminFetch = useAdminFetch();
-  const API_BASE = apiBase || "http://localhost:4000";
+  const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
 
   const [services, setServices] = useState([]);
   const [openDetails, setOpenDetails] = useState({});

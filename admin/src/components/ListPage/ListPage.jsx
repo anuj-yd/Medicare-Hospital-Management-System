@@ -101,7 +101,7 @@ function getSortedScheduleDates(scheduleLike) {
 
 export default function AnimatedDoctorListResponsive({ apiBase }) {
   const adminFetch = useAdminFetch();
-  const API_BASE = apiBase || "http://localhost:4000";
+  const API_BASE = apiBase || import.meta.env.VITE_API_URL || "http://localhost:4000";
 
   const [doctors, setDoctors] = useState([]);
   const [expanded, setExpanded] = useState(null);
